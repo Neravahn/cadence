@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="logo">
+        cadence
+    </div>
+
+    <div id="auth">
+        <p>SIGN UP</p>
+        <button id="googleLogin" class="authBtns">
+            <img src="{{ url_for('static', filename='images/googleLogin.png')}}">
+            CONTINUE WITH GOOGLE
+        </button>
+
+        <button id="githubLogin" class="authBtns">
+            <img src="{{ url_for('static', filename='images/githubLogin.png')}}">
+            CONTINUE WITH GITHUB
+        </button>
+
+        <p>By continuing you agree that the app will be able to collect you name and e-mail</p>
+    </div>
+    
+</body>
+</html>
