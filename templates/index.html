@@ -1,29 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+    @font-face {
+        font-family: 'Nunito';
+        src: url("{{ url_for('static', filename='fonts/Nunito.ttf') }}") format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+    }
+
+    body {
+        background: black;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    #logo {
+        color: white;
+    }
+
+    .authBtns {
+        width: 300px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        border-radius: 12px;
+        border: 2px solid rgba(255, 255, 255, 0);
+    }
+
+    #githubLogin {
+        background-color: #6e5494;
+        color: white;
+    }
+
+
+    #googleLogin:hover {
+        background-color: rgb(204, 204, 204);
+        cursor: pointer;
+    }
+
+    #githubLogin:hover {
+        background-color:#5b3e7a;
+        cursor: pointer;
+    }
+
+    .authBtns img {
+        width: 35px;
+        height: 35px;
+    }
+
+    #orDivide {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        margin: 20px 0;
+        color: #ffffff;
+        font-weight: bold;
+        font-size: 14px;
+        width: 100%;
+    }
+
+    #orDivide::before,
+    #orDivide::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: #aaa;
+        margin: 0 20px;
+    }
+
+    #auth {
+        width: 500px;
+        border: 1px solid rgba(255, 255, 255, 0);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 30px;
+        margin-top: 0;
+    }
+
+    #auth p {
+        color: white;
+        text-align: center;
+        margin: 10px 0;
+    }
+
+    #logo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 10rem;
+        font-family: 'Nunito';
+    }
+
+    #paragraph {
+        width: 800px;
+        color: white;
+        text-align: center;
+    }
+</style>
+
 <body>
     <div id="logo">
         cadence
     </div>
 
+    <div id="paragraph">
+            <p>Cadence helps you stay on top of your tasks and manage your time efficiently.
+            Enter your subjects, chapters, and available hours, and Cadence will create a personalized daily schedule.
+            Focus on what matters most, while Cadence keeps your progress steady and consistent.</p>
+    </div>
+
+
     <div id="auth">
-        <p>SIGN UP</p>
         <button id="googleLogin" class="authBtns">
             <img src="{{ url_for('static', filename='images/googleLogin.png')}}">
             CONTINUE WITH GOOGLE
         </button>
+
+        <div id="orDivide">OR</div>
 
         <button id="githubLogin" class="authBtns">
             <img src="{{ url_for('static', filename='images/githubLogin.png')}}">
             CONTINUE WITH GITHUB
         </button>
 
-        <p>By continuing you agree that the app will be able to collect you name and e-mail</p>
+        <p>By continuing, you agree that Cadence can access your name and email to personalize your experience.</p>
     </div>
-    
+
 </body>
+
 </html>
