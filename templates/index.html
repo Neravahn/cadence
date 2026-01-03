@@ -21,16 +21,16 @@
     }
 
     body {
-        background: black;
+        min-height: 100vh;
+        background: radial-gradient(circle at top,
+                #2f2f53,
+                #000000 65%);
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    }
-
-    #logo {
-        color: white;
+        color: #eaeaea;
     }
 
     .authBtns {
@@ -42,6 +42,7 @@
         gap: 20px;
         border-radius: 12px;
         border: 2px solid rgba(255, 255, 255, 0);
+        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     #githubLogin {
@@ -53,11 +54,13 @@
     #googleLogin:hover {
         background-color: rgb(204, 204, 204);
         cursor: pointer;
+        transform: scale(1.05);
     }
 
     #githubLogin:hover {
-        background-color:#5b3e7a;
+        background-color: #5b3e7a;
         cursor: pointer;
+        transform: scale(1.05);
     }
 
     .authBtns img {
@@ -70,7 +73,7 @@
         align-items: center;
         text-align: center;
         margin: 20px 0;
-        color: #ffffff;
+        color: rgba(255, 255, 255, 0.6);
         font-weight: bold;
         font-size: 14px;
         width: 100%;
@@ -81,7 +84,7 @@
         content: "";
         flex: 1;
         height: 1px;
-        background: #aaa;
+        background: rgba(255, 255, 255, 0.2);
         margin: 0 20px;
     }
 
@@ -106,9 +109,30 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        font-size: 10rem;
+        font-size: 9rem;
         font-family: 'Nunito';
+        letter-spacing: 14px;
+        color: white;
+        text-shadow: 0 0 40px rgba(120, 100, 255, 0.25);
+        margin-bottom: 10px;
     }
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    body {
+        animation: float 4s ease-in-out infinite;
+    }
+
 
     #paragraph {
         width: 800px;
@@ -123,7 +147,7 @@
     </div>
 
     <div id="paragraph">
-            <p>Cadence helps you stay on top of your tasks and manage your time efficiently.
+        <p>Cadence helps you stay on top of your tasks and manage your time efficiently.
             Enter your subjects, chapters, and available hours, and Cadence will create a personalized daily schedule.
             Focus on what matters most, while Cadence keeps your progress steady and consistent.</p>
     </div>
