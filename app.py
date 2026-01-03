@@ -1,12 +1,16 @@
 from flask import Flask, render_template, redirect, url_for, request, jsonify
+import firebase_admin
+from firebase_admin import credentials, auth
 import requests
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
-
 GITHUB_CLIENT_ID = os.getenv("GITHUB_CLIENT_ID")
 GITHUB_CLIENT_SECRET = os.getenv("GITHUB_CLIENT_SECRET")
+
+cred = credentials.Certificate("firebase_key.json")
+firebase_admin.initialize_app(cred)
 
 
 app = Flask(__name__)
@@ -63,6 +67,27 @@ def github_callback():
     provider = "github"
 
     return redirect("/dashboard")
+
+
+
+@app.route("/auth/google", methods = ['POST'])
+def google_login():
+
+    try:
+        data = request.get_json()
+        token = data.get("token")
+
+        decoded = auth.verify_id_token(token)
+
+        email = decoded.get('email')
+        picture = decoded.get('picture')
+        name = decoded.get('name')
+        provider = 'google'
+        
+        return jsonify({"success": True})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 401
+
 
 @app.route("/dashboard")
 def dashboard():

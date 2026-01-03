@@ -172,7 +172,61 @@
 
 
 
-    <script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyANJwjPO2btZCzp2bBJf1wdxAlBZf-lsws",
+            authDomain: "cadence-8c870.firebaseapp.com",
+            projectId: "cadence-8c870",
+            storageBucket: "cadence-8c870.firebasestorage.app",
+            messagingSenderId: "355232649484",
+            appId: "1:355232649484:web:0cd00e2873593e607ff929",
+            measurementId: "G-ECDF2DVP4C"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const googleProvider = new GoogleAuthProvider();
+
+        async function handleGoogleSignIn() {
+            try {
+                const result = await signInWithPopup(auth, googleProvider);
+                const user = result.user;
+
+                const token = await user.getIdToken();
+
+                const res = await fetch('/auth/google', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token })
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    window.location.href = '/dashboard';
+                } else {
+                    console.error('Backend verification failed');
+                }
+
+            } catch (error) {
+                console.error('Google login failed:', error);
+                alert('Google login failed. Please try again.');
+            }
+        }
+
+
+        document.getElementById("googleLogin").addEventListener("click", handleGoogleSignIn );
+
         document.getElementById("githubLogin").addEventListener("click", () => {
             window.location.href = "/auth/github"
         })
