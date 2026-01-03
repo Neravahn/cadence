@@ -32,6 +32,8 @@ def checkUserExist(email, provider):
     else:
         return False
     
+#AFTER THIS JUST LOGIN BY TAKING THE NECESSARY DATA
+    
 
 def checkEmailExist(email):
     query2 = "SELECT 1 FROM users WHERE email = ?"
@@ -42,36 +44,48 @@ def checkEmailExist(email):
         return True
     else:
         return False
+#IF EMAIL EXIST THEN USE THE SAME USERID FOR THE OTHER PROVIDER
+
+
+def userSave(userId, email, provider):
+    query3 = "INSERT INTO users (userId, email, provider) VALUES (?, ?, ?)"
+    cursor.execute(query3, (userId, email, provider))
+
+    conn.commit()
+#THIS IS TO SAVE THE USER EITHER NEW OR WITH SAME EMAIL
     
 
 
-def userSave(userId, name, email, picture, provider):
-    query3 = "INSERT INTO users (userId, email, picture, name, provider) VALUES (?, ?, ?, ?)"
-    cursor.execute(query3, (userId, email, picture, name, provider))
-    
+def sameUsername(email, provider):
+    userExist = checkUserExist(email, provider)
 
+    if userExist != True:
+        res = checkEmailExist(email)
 
-def sameUsername(email, name, picture, provider):
-    res = checkEmailExist(email)
+        if res == True:
+            query3 = "SELECT userId FROM users WHERE email = ?"
+            cursor.execute(query3, (email,))
+            userId = cursor.fetchone()[0]
+            userSave(userId, email, provider)
+            return "PROVIDER-LINKED"
 
-    if res == True:
-        query3 = "SELECT userId FROM users WHERE email = ?"
-        cursor.execute(query3, (email,))
-        userId = cursor.fetchone[0]
-        userSave(userId, name, email, picture, provider)
+        if res == False:
+            while True:
+                userId = generateUserId()
 
-    if res == False:
-        while True:
-            userId = generateUserId()
+                query2 = "SELECT 1 FROM users WHERE userId = ?"
+                cursor.execute(query2, (userId,))
+                row = cursor.fetchone()
+                if row:
+                    continue
+                else:
+                    userSave(userId, email, provider)
+                    break
+            return "NEW-USER"
 
-            query2 = "SELECT 1 FROM users WHERE username = ?"
-            cursor.execute(query2, (userId,))
-            row = cursor.fetchone()
+    else:
+        return "LOGIN"
 
-
-            if row:
-                continue
-            else:
-                userSave(userId, name, email, picture, provider)
+# THIS IS THE MAIN THING WHICH SAVES USER
 
 
